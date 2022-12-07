@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/hack-camp_vol9_2022-2/server/src/handlers"
+	"github.com/Doer-org/hack-camp_vol9_2022-2/server/src/handlers"
 )
 
 func main() {

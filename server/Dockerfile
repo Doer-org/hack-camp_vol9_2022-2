@@ -8,9 +8,9 @@ ENV ROOTPATH=/go/app
 
 WORKDIR /go/src/github.com/Doer-org/hack-camp_vol9_2022-2
 
-RUN go install github.com/cosmtrek/air@v1.40.0
-COPY go.mod go.sum .air.toml ./
+# RUN go install github.com/cosmtrek/air@v1.40.0
+COPY go.mod go.sum  ./
 RUN go mod download
 
 EXPOSE 80
-CMD ["air", "-c", ".air.toml"]
+# CMD ["air", "-c", ".air.toml"]

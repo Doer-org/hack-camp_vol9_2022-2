@@ -1,4 +1,4 @@
-module github.com/Doer-org/hack-camp_vol9_2022-2
+module github.com/Doer-org/hack-camp_vol9_2022-2/server
 
 go 1.17
 
