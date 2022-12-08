@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  server:
+    container_name: hack-camp_val9-2
+    restart: always
+    tty: true
+
+  database:
+    container_name: hack-camp_val9-2
+    restart: always
+    tty: true
+
+  redis:
+    container_name: hack-camp_val9-2
+    restart: always
+    tty: true
