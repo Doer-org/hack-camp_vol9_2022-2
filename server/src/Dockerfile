@@ -1,7 +1,7 @@
 ## Build
 FROM golang:1.17-buster AS build
 
-WORKDIR /go/src/github.com/kuma0328/web3hackathon
+WORKDIR /go/src/github.com/Doer-org/hack-camp_vol9_2022-2
 
 COPY go.mod ./
 COPY go.sum ./

@@ -8,7 +8,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-    - ../src:/go/src/github.com/kuma0328/web3hackathon
+    - ../src:/go/src/github.com/Doer-org/hack-camp_vol9_2022-2
     environment:
       - DB_DATABASE=${DB_DATABASE}
       - DB_HOST=${DB_HOST}

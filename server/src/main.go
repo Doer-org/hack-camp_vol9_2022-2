@@ -1,23 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-
-	"github.com/Doer-org/hack-camp_vol9_2022-2/server/src/handlers"
+	"github.com/Doer-org/hack-camp_vol9_2022-2/presentation/router"
 )
 
 func main() {
-	db, err := database.NewDB()
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
+	// db, err := database.NewDB()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer db.Close()
 
 	r := router.NewRouter()
-	r.InitRoomRouter(db)
-	r.InitHealthRouter()
+	// r.InitRoomRouter(db)
 
 	r.Serve()
 }
