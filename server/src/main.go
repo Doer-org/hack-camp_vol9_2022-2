@@ -9,10 +9,15 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/ws", handlers.NewWebsocketHandler().Handle)
-	port := "80"
-	log.Printf("Listening on port %s", port)
-	if err := http.ListenAndServe(fmt.Sprintf(":%v", port), nil); err != nil {
-		log.Panicln("Serve Error:", err)
+	db, err := database.NewDB()
+	if err != nil {
+		panic(err)
 	}
+	defer db.Close()
+
+	r := router.NewRouter()
+	r.InitRoomRouter(db)
+	r.InitHealthRouter()
+
+	r.Serve()
 }

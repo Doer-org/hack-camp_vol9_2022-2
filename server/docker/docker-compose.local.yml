@@ -2,16 +2,16 @@ version: "3"
 
 services:
   server:
-    container_name: hack-camp_val9-2
+    container_name: hack-camp_val9-2-server
     restart: always
     tty: true
 
   database:
-    container_name: hack-camp_val9-2
+    container_name: hack-camp_val9-2-database
     restart: always
     tty: true
 
   redis:
-    container_name: hack-camp_val9-2
+    container_name: hack-camp_val9-2-redis
     restart: always
     tty: true
