@@ -1,7 +1,6 @@
-import { Question } from '@/types/Question'
-import * as O from 'fp-ts/Option'   
-import React, { useState } from 'react'
-import useWebSocket from 'react-use-websocket'
+import { useResultStore } from '@/store/ResultStore'
+import { Question } from '@/types/Question' 
+import React, { useState } from 'react' 
 /*
     
     問題文表示
@@ -37,11 +36,15 @@ export default () : {
         finished : false
     }
 
+    const [ typeN, setTypeN ] = useState(0)
+    const [ typoN, setTypoN] = useState(0)
+    const { result, setResult } = useResultStore()
+
     const [state, setState] = useState<GameState>(initState)
 
     const handleKey = (key: string) => {
-        if (key.length === 1) {
-            // console.log(key + " " + state.input_n)
+        if (key.length === 1) { 
+            setTypeN(typeN + 1)
             const question = state.questions[state.Q_n]
             const code = question.codes[0]
             if (code[state.input_n] === key)  {
@@ -55,6 +58,12 @@ export default () : {
                             typo : false,
                             finished : true
                         })
+                        setResult(
+                            {
+                                questions: state.questions,
+                                accurasy : (typeN - typoN) / typeN
+                            } 
+                        )
                         console.log("finish")
                     } else { 
                         setState({
@@ -78,6 +87,7 @@ export default () : {
                 } 
             } 
             else { 
+                setTypoN(typoN+1)
                 setState({
                     key : state.key,
                     questions : state.questions,

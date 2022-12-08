@@ -4,14 +4,9 @@ import {
     TServerMessageType, 
     IServerJoin, 
 } from '@/types/api/prepare'
+ 
 
-import { AxiosClient } from '@/api/AxiosClient'
-import axios, {AxiosInstance} from 'axios'
-
-// type に応じて返す方をカエル
-// string -> json -> 
-
-import { tryParse } from '@/api/util'
+import { tryParse } from '@/util/jsonParser'
 
 interface WSMessage { 
     type: TServerMessageType,

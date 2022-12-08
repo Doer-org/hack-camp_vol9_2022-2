@@ -4,7 +4,7 @@ import { Button, Modal } from 'react-daisyui'
 import useWebSocket, { ReadyState } from 'react-use-websocket'
 import { useLocation, useNavigate } from "react-router-dom"
 // import * as RoomApi from '@/api/room'
-import { parsePrepairWS } from '@/api/prepare'
+import { parsePrepairWS } from '@/util/prepare'
 import * as O from 'fp-ts/Option'
 import * as TE from 'fp-ts/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
@@ -26,9 +26,7 @@ const PreparePage: React.FC<Props> = () => {
 	const roomApi = useRoomApi()
 	const { userInfo, setUserInfo } = useUserInfoStore()
 	const { roomInfo, setRoomInfo } = useRoomInfoStore()
-
-	// room_idが無効な場合
-
+  
 	useEffect(() => {
 		if (lastJsonMessage !== null) {
 			const message = parsePrepairWS(JSON.stringify(lastJsonMessage))

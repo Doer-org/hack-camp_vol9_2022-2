@@ -1,7 +1,7 @@
 import * as O from 'fp-ts/Option'
 import * as TE from 'fp-ts/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { parseGameWS, createIClientProgress, createIClientAction, createIClientFinish } from '@/api/game'
+import { parseGameWS, createIClientProgress, createIClientAction, createIClientFinish } from '@/util/game'
 // import '@/App.css'
 import '@/hooks/useSinglePlayerGame'
 import useMultiplayerOneLinear from '@/hooks/useMultiPlayerMode'
