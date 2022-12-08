@@ -3,9 +3,7 @@ import { Button } from 'react-daisyui'
 import { useNavigate } from 'react-router-dom'
 
 /*
-    サーバから結果を取得．表示
-    
-    
+    サーバから結果を取得．表示 
     コード評価
 */
 
@@ -15,6 +13,7 @@ interface Props {
 
 const ResultPage : React.FC<Props> = () => {
     const navigate = useNavigate()
+    
     return (
         <>
             <h1>Result</h1>
