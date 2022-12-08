@@ -1,43 +1,63 @@
 
-export type TClientMessageType = "action" | "progress" | "finish"
+export type TClientMessageType = "client_action" | "client_key_input" | "client_finish"
 // 進捗
-export interface IClientProgress {  
-    user_id: string; 
-    Q_n : number;
-    Q_n_i: number;
-    typo: boolean
+export type IClientProgress = {  
+    type : "client_key_input"
+    data : { 
+        user_id: string; 
+        Q_n : number;
+        Q_n_i: number;
+        typo: boolean
+    }
 }
 
 // アクション
-export interface IClientAction {
-    type : "action"
-    user_id: string; 
-    attack : string;
+export type IClientAction = {
+    type : "client_action"  
+    data : { 
+        user_id: string; 
+        attack : string;
+    }
 }
 
 // 終了
-export interface IClientFinish { 
-    type : "finish"
-    user_id: string;  
-
+export type IClientFinish = { 
+    type : "client_finish"
+    data : { 
+        user_id: string;  
+    } 
 }
-
 
 
 export type TServerMessageType = "server_current_ranking" | "server_user_progress" | "server_finish"
+// export enum TServerMessageType {
+//     server_current_ranking = "server_current_ranking",
+//     server_user_progress = "server_user_progress",
+//     server_finish = "server_finish"
+// }
 
 // ランキング更新
 export interface IServerRanking { 
-    ranking : {user_name: string, user_id: string,rank: number}[]
+    type : "server_current_ranking"
+    data : { 
+        ranking : {user_name: string, user_id: string,rank: number}[]
+    }
 }
 
 export interface IServerProgress { 
-    members : {user_name: string, user_id: string, Q_n: number, Q_n_i: number, typo: boolean}[]
+    type : "server_user_progress"
+    data : { 
+        members : {user_name: string, user_id: string, Q_n: number, Q_n_i: number, typo: boolean}[]
+    }
 }
  
 
 // ランキング更新
 export interface IServerFinish { 
-    some_data : string;
+    type :  "server_finish"
+    data : {    
+        
+        some_data : string;
+    }
 }
  

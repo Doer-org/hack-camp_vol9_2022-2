@@ -16,6 +16,7 @@ type GameState = {
     questions : Question[]
     Q_n : number
     input_n : number
+    typo : boolean
     finished : boolean
 }
 
@@ -32,6 +33,7 @@ export default () : {
         ],
         Q_n : 0,
         input_n : 0,
+        typo : false,
         finished : false
     }
 
@@ -50,6 +52,7 @@ export default () : {
                             questions : state.questions,
                             Q_n : state.Q_n,
                             input_n: state.input_n + 1,
+                            typo : false,
                             finished : true
                         })
                         console.log("finish")
@@ -59,6 +62,7 @@ export default () : {
                             questions : state.questions,
                             Q_n : state.Q_n + 1,
                             input_n: 0,
+                            typo : false,
                             finished : false
                         }) 
                     }
@@ -68,6 +72,7 @@ export default () : {
                         questions : state.questions,
                         Q_n : state.Q_n,
                         input_n: state.input_n + 1,
+                        typo : false,
                         finished : false
                     })
                 } 
@@ -78,6 +83,7 @@ export default () : {
                     questions : state.questions,
                     Q_n : state.Q_n,
                     input_n: state.input_n,
+                    typo : true,
                     finished : false
                 })
             }
