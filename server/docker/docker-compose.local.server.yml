@@ -4,12 +4,13 @@ services:
   server:
     build:
       context: ../src
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
     volumes:
-    - ../src:/go/src/github.com/Doer-org/hack-camp_vol9_2022-2
+      - ../src:/go/src/github.com/Doer-org/hack-camp_vol9_2022-2
     environment:
+      - ENVIRONMENT=${ENVIRONMENT}
       - DB_DATABASE=${DB_DATABASE}
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
