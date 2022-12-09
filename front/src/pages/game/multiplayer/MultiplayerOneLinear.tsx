@@ -23,6 +23,7 @@ import {
 } from '@/types/api/game'
 import { useUserInfoStore } from '@/store/UserInfoStore'
 import { useRoomInfoStore } from '@/store/RoomInfoStore'
+import { WebSocketMessage } from 'react-use-websocket/dist/lib/types'
 /*
   ゲーム終了 => ResultPageに移動
 
@@ -38,8 +39,8 @@ const MultiplayerOneLinear: React.FC<Props> = () => {
 	const { userInfo, setUserInfo } = useUserInfoStore()
 	const { roomInfo, setRoomInfo } = useRoomInfoStore()
 	const [ socketUrl, setSocketUrl] = useState('ws://localhost:8080/echo')
-	const { sendMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl)
-  const [ lastSend, setLastSend ] = useState("")
+	const { sendMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl) 
+  const [ lastSend, setLastSend ] = useState("") 
 
 	const connectionStatus = {
 		[ReadyState.CONNECTING]: 'Connecting',
@@ -50,6 +51,7 @@ const MultiplayerOneLinear: React.FC<Props> = () => {
 	}[readyState];
   const [ userId, setUserId ] = useState<string>("")
   const { state, handleKey } = useMultiplayerOneLinear()
+  const navigate = useNavigate()
 
 
   // とりあえず受け取ったメッセージをコンソール出力する
@@ -96,20 +98,18 @@ const MultiplayerOneLinear: React.FC<Props> = () => {
     )
     setLastSend(JSON.stringify(data))
     sendMessage(JSON.stringify(data))  
-  } 
-  
+  }   
   useEventListener('keydown', keyPress(handleKey))
 
-  const navigate = useNavigate()
   // ゲーム終了時の処理
   useEffect(() => {
     if (state.finished) {
       // サーバーに通知 
-      sendMessage(JSON.stringify(
-        createIClientFinish({
+      const data = createIClientFinish({
           user_id : userId
         }) 
-      ))
+      sendMessage(JSON.stringify(data))
+      setLastSend(JSON.stringify(data)) 
     }
     // console.log(state)
   }, [state])
