@@ -13,12 +13,11 @@ interface Props {
 
 const CreateRoomPage: React.FC<Props> = () => {
   const { roomInfo, setRoomInfo } = useRoomInfoStore()
-  const [value, copyToClipboard] = useCopyToClipboard()
+  const [value, copyToClipboard] = useCopyToClipboard()  
   const roomAPI = useRoomApi()
   return (
     <>
-      <h1>Create Room</h1>
-      <p>一緒に遊ぶ人に<a href={`http://127.0.0.1:5173/game/multiplayer/prepare-room?room_id=${roomInfo.roomId}`}>リンク</a>を教えましょう！</p>
+      <h1>Create Room</h1> 
       <p>
         ルーム名
         <input
@@ -31,10 +30,8 @@ const CreateRoomPage: React.FC<Props> = () => {
             }) 
           } 
         />
-      </p>
-      <p> いろいろ設定項目 ２ </p>
-      <p> いろいろ設定項目 ３ </p>
-      <p>{`http://127.0.0.1:5173/game/multiplayer/prepare-room?room_id=${roomInfo.roomId}`}</p>
+      </p> 
+      {/* <p>{`http://127.0.0.1:5173/game/multiplayer/prepare-room?room_id=${roomInfo.roomId}`}</p> */}
       <Button
         color="primary"
         onClick={() => { 
@@ -51,8 +48,9 @@ const CreateRoomPage: React.FC<Props> = () => {
           copyToClipboard(`http://127.0.0.1:5173/game/multiplayer/prepare-room?room_id=${roomInfo.roomId}`) 
         }}
       >
-        Create Room
+        ルームURL発行
       </Button>
+      <p>一緒に遊ぶ人に<a href={`http://127.0.0.1:5173/game/multiplayer/prepare-room?room_id=${roomInfo.roomId}`}>リンク</a>を教えましょう！</p>
     </>
   )
 }

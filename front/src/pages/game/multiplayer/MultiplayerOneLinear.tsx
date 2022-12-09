@@ -21,6 +21,8 @@ import {
     IServerProgress,
     IServerFinish, 
 } from '@/types/api/game'
+import { useUserInfoStore } from '@/store/UserInfoStore'
+import { useRoomInfoStore } from '@/store/RoomInfoStore'
 /*
   ゲーム終了 => ResultPageに移動
 
@@ -33,7 +35,19 @@ interface Props {
 
 const MultiplayerOneLinear: React.FC<Props> = () => {
 
-  const { sendMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket('ws://localhost:8080/echo')
+	const { userInfo, setUserInfo } = useUserInfoStore()
+	const { roomInfo, setRoomInfo } = useRoomInfoStore()
+	const [ socketUrl, setSocketUrl] = useState('ws://localhost:8080/echo')
+	const { sendMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl)
+  const [ lastSend, setLastSend ] = useState("")
+
+	const connectionStatus = {
+		[ReadyState.CONNECTING]: 'Connecting',
+		[ReadyState.OPEN]: 'Open',
+		[ReadyState.CLOSING]: 'Closing',
+		[ReadyState.CLOSED]: 'Closed',
+		[ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+	}[readyState];
   const [ userId, setUserId ] = useState<string>("")
   const { state, handleKey } = useMultiplayerOneLinear()
 
@@ -80,6 +94,7 @@ const MultiplayerOneLinear: React.FC<Props> = () => {
         typo : state.typo
       } 
     )
+    setLastSend(JSON.stringify(data))
     sendMessage(JSON.stringify(data))  
   } 
   
@@ -104,7 +119,33 @@ const MultiplayerOneLinear: React.FC<Props> = () => {
 
   return (
     <>
-      <h1>multi player</h1>
+			<h1>{roomInfo.roomName} ゲーム画面</h1>
+			<p>The WebSocket is currently {connectionStatus}</p>
+			<>
+				url: 
+				<input
+					type="text"
+					size={50}
+					defaultValue={socketUrl}
+					onChange={(e) =>
+						setSocketUrl(e.target.value)
+					} 
+				/>
+        <br/> 
+        <h3>send</h3>
+        <p>            
+          {
+            lastSend
+          }
+        </p>
+        <h3>recieved</h3>
+        <p>            
+          {
+            lastMessage?.data
+          }
+        </p>
+        <hr/>
+			</>
       {
         state.finished ?
           <>

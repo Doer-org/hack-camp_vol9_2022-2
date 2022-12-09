@@ -11,9 +11,11 @@ export const Routing = () => {
     <>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home />} />
+          {/* <Route index element={<Home />} /> */}
+          {/* <Route path='/game/mode-select' element={<ModeSelect />} /> */}
+          <Route index element={<ModeSelect />} />
           <Route path='/game/practice/one-linear' element={<PracticeOneLinear />} />
-          <Route path='/game/mode-select' element={<ModeSelect />} />
+          
           <Route path='/game/multiplayer/create-room' element={<CreateRoomPage/>} />
           <Route path='/game/multiplayer/prepare-room' element={<Prepare/>} />
           <Route path='/game/multiplayer/room' element={<MultiplayerOneLinear/>} />

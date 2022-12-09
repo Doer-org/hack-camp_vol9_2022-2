@@ -22,7 +22,9 @@ interface Props {
 const PreparePage: React.FC<Props> = () => { 
 	const [ hasJoined, setJoined ] = useState(false) 
 	const [ members, setMembers ] = useState<IServerJoin[]>([])
-	const { sendMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket('ws://localhost:8080/echo')
+	const [ socketUrl, setSocketUrl] = useState('ws://localhost:8080/echo')
+	const { sendMessage, lastMessage, lastJsonMessage, readyState } = useWebSocket(socketUrl)
+	const [ lastSend, setLastSend ] = useState("")
 	const roomApi = useRoomApi()
 	const { userInfo, setUserInfo } = useUserInfoStore()
 	const { roomInfo, setRoomInfo } = useRoomInfoStore()
@@ -79,6 +81,7 @@ const PreparePage: React.FC<Props> = () => {
 		)()
 
 		// WebSocketのメンバー追加通知の中に自身のIDが含まれるか確認
+		setLastSend('joined!')
 		sendMessage('joined!')
 		setJoined(true)
 	}
@@ -89,6 +92,30 @@ const PreparePage: React.FC<Props> = () => {
 		<>
 			<h1>{roomInfo.roomName} 待機画面</h1>
 			<p>The WebSocket is currently {connectionStatus}</p>
+			<>
+				url: 
+				<input
+					type="text"
+					size={50}
+					defaultValue={socketUrl}
+					onChange={(e) =>
+						setSocketUrl(e.target.value)
+					} 
+				/>
+				<br/> 
+				<h3>send</h3>
+				<p>            
+					{
+						lastSend
+					}
+				</p>
+				<h3>recieved</h3>
+				<p>            
+					{
+						lastMessage?.data
+					}
+				</p>
+			</>
 			<hr />
 			{
 				hasJoined ?
@@ -118,8 +145,7 @@ const PreparePage: React.FC<Props> = () => {
 									setUserInfo({
 										userId: userInfo.userId,
 										userName: e.target.value
-									})
-
+									}) 
 								}
 
 							/>
