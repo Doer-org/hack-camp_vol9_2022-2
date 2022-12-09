@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
-
 	"github.com/Doer-org/hack-camp_vol9_2022-2/config"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func NewDB() (*sql.DB, error) {

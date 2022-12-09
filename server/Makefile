@@ -14,7 +14,6 @@ DOCKER_FILE_DIR                 := ./docker
 DOCKER_COMPOSE_LOCAL            := $(DOCKER_FILE_DIR)/docker-compose.local.yml
 DOCKER_COMPOSE_LOCAL_DATABASE   := $(DOCKER_FILE_DIR)/docker-compose.local.database.yml
 DOCKER_COMPOSE_LOCAL_SERVER     := $(DOCKER_FILE_DIR)/docker-compose.local.server.yml
-DOCKER_COMPOSE_LOCAL_REDIS     := $(DOCKER_FILE_DIR)/docker-compose.local.redis.yml
 DOCKER_EXEC                     := docker exec -it
 GITHUB_REPOSITORY_NAME          := hack-camp_vol9-2
 DB_CONTAINER_NAME               := $(GITHUB_REPOSITORY_NAME)-database
@@ -31,7 +30,6 @@ up: ## docker環境を立ち上げる
 	$(ENV_LOCAL) docker-compose \
 	-f $(DOCKER_COMPOSE_LOCAL) \
 	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
-	-f $(DOCKER_COMPOSE_LOCAL_REDIS) \
 	-f $(DOCKER_COMPOSE_LOCAL_SERVER) up
 
 .PHONY: down
@@ -39,7 +37,6 @@ down: ## dockerイメージを削除し、docker環境を閉じる
 	docker-compose \
 	-f $(DOCKER_COMPOSE_LOCAL) \
 	-f $(DOCKER_COMPOSE_LOCAL_DATABASE) \
-	-f $(DOCKER_COMPOSE_LOCAL_REDIS) \
 	-f $(DOCKER_COMPOSE_LOCAL_SERVER) down \
 	--rmi all --volumes --remove-orphans
 

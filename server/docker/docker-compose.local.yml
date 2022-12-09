@@ -10,8 +10,3 @@ services:
     container_name: hack-camp_val9-2-database
     restart: always
     tty: true
-
-  redis:
-    container_name: hack-camp_val9-2-redis
-    restart: always
-    tty: true
