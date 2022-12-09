@@ -20,13 +20,13 @@ const PracticeOneLinear: React.FC<Props> = () => {
       <>  
         {/* {state.questions.map((q, i) => <h1 key={i}>{q.codes[0]}</h1>)} */
           state.Q_n === state.questions.length - 1 
-            && state.input_n === state.questions[state.Q_n].codes[0].length //- 1 
+            && state.input_n === state.questions[state.Q_n].codes.length //- 1 
             ? <>  
                 <h1>finish</h1>  
               </>
             : <> 
                 <h1>{
-                  state.questions[state.Q_n].codes[0].split('')
+                  state.questions[state.Q_n].codes.split('')
                   .map((key, idx) => {
                     if (idx < state.input_n) {
                       return <span style={{color: "white"}}>{key}</span>

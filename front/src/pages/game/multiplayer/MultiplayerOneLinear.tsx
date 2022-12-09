@@ -156,17 +156,24 @@ const MultiplayerOneLinear: React.FC<Props> = () => {
           </>
           :
           <>
-            <h2>{state.Q_n + 1} / {state.questions.length}  </h2>
+            <h2>{state.Q_n + 1} / {state.questions.length}  </h2> 
             <h1>{
-              state.questions[state.Q_n].codes[0].split('')
-                .map((key, idx) => {
-                  if (idx < state.input_n) {
-                    return <span style={{ color: "white" }} key={idx}>{key}</span>
-                  } else {
-                    return <span style={{ color: "gray" }} key={idx}>{key}</span>
-                  }
-                })
+              state.record[state.Q_n].map((v,i) => {
+                if (v.status === 'waiting') {
+                  return <span style={{ color: "gray", backgroundColor:"green" }} key={i}>{v.key}</span> 
+                }
+                else if (v.status === 'correct') {
+                  return <span style={{ color: "white" }} key={i}>{v.key}</span> 
+                }
+                else if (v.status === 'incorrect') {
+                  return <span style={{ color: "red" }} key={i}>{v.key}</span> 
+                }
+                else { 
+                  return <span style={{ color: "darkred", backgroundColor:"green" }} key={i}>{v.key}</span> 
+                }
+              })
             }</h1>
+
             <h2>{state.questions[state.Q_n].language}, {state.questions[state.Q_n].tips}</h2>
             {/* <> 
                 <Table>

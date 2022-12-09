@@ -1,13 +1,15 @@
 import create from "zustand"
-import { persist } from 'zustand/middleware'
-import { Question } from '@/types/Question' 
+import { persist } from 'zustand/middleware' 
+import {KeyLog, Question} from '@/types/Game'
 
 interface Result {
     questions : Question[]
+    records : KeyLog[][]
     accurasy : number 
 }
 const initResult : Result = {
     questions : [],
+    records : [],
     accurasy : 0.0
 }
 

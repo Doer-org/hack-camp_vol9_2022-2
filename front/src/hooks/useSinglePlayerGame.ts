@@ -1,4 +1,5 @@
-import { Question } from '@/types/Question'
+ 
+import {Question} from '@/types/Game'
 import * as O from 'fp-ts/Option'   
 import React, { useState } from 'react'
 /*
@@ -25,8 +26,8 @@ export default () : {
     const initState : GameState = {
         key : "",
         questions : [ 
-            { codes : ["printfn \"Hello World\""], tips : "Hello Worldを出力する", language : "F#" },
-            { codes : ["[1..10] |> List.map(fun x -> 2 * x)"], tips : "1から10の整数のリストの要素を2倍する．", language : "F#" },
+            { codes : "printfn \"Hello World\"", tips : "Hello Worldを出力する", language : "F#" },
+            { codes : "[1..10] |> List.map(fun x -> 2 * x)", tips : "1から10の整数のリストの要素を2倍する．", language : "F#" },
         ],
         Q_n : 0,
         input_n : 0 
@@ -38,7 +39,7 @@ export default () : {
         if (key.length === 1) {
             // console.log(key + " " + state.input_n)
             const question = state.questions[state.Q_n]
-            const code = question.codes[0]
+            const code = question.codes
             if (code[state.input_n] === key)  {
                 if (state.input_n + 1 === code.length) { 
                     if (state.Q_n + 1 === state.questions.length) {
