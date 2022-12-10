@@ -9,4 +9,5 @@ var (
 	ExecError      = errors.New("exec error")
 	QueryrowError  = errors.New("queryrow error")
 	RowsScanError  = errors.New("Rows Scan error")
+	RowsLoopError = errors.New("Rows Loop error")
 )

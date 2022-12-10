@@ -14,7 +14,7 @@ func (r *Router) InitRoomRouter(db *sql.DB) {
 	h := handler.NewRoomHandler(uc)
 
 	g := r.Engine.Group("/room")
-	g.POST("/create", h.NewRoom)
+	g.POST("/new", h.NewRoom)
 	g.GET("/:id", h.GetRoomOfID)
 	g.DELETE("/:id", h.DeleteRoomOfID)
 }
