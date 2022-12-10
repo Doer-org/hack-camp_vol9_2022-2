@@ -3,10 +3,10 @@ package json
 import "github.com/Doer-org/hack-camp_vol9_2022-2/domain/entity"
 
 type RoomJson struct {
-	Id          string `json:"id"`
-	Name        string `json:"name"`
-	MaxMember   int    `json:"max_member"`
-	MemberCount int    `json:"member_count"`
+	RoomId          string `json:"room_id"`
+	RoomName        string `json:"room_name"`
+	MaxCount   int    `json:"max_count"`
+
 }
 
 type RoomsJson []RoomJson
@@ -15,19 +15,17 @@ type RoomIdJson string
 
 func RoomEntityToJson(c *entity.Room) *RoomJson {
 	return &RoomJson{
-		Id:          c.Id,
-		Name:        c.Name,
-		MaxMember:   c.MaxMember,
-		MemberCount: c.MemberCount,
+		RoomId:          c.RoomId,
+		RoomName:        c.RoomName,
+		MaxCount:   c.MaxCount,
 	}
 }
 
 func RoomJsonToEntity(j *RoomJson) *entity.Room {
 	return &entity.Room{
-		Id:          j.Id,
-		Name:        j.Name,
-		MaxMember:   j.MaxMember,
-		MemberCount: j.MemberCount,
+		RoomId:          j.RoomId,
+		RoomName:        j.RoomName,
+		MaxCount:   j.MaxCount,
 	}
 }
 

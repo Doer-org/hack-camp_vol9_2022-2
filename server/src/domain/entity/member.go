@@ -1,8 +1,8 @@
 package entity
 
 type Member struct {
-	Id     int
-	Name   string
+	UserId     string
+	UserName   string
 	RoomId string
 }
 

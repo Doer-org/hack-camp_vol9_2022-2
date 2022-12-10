@@ -153,7 +153,7 @@ const PreparePage: React.FC<Props> = () => {
 						</>
 						<Button
 							onClick={joinRoom}
-							disabled={readyState !== ReadyState.OPEN}
+							// disabled={readyState !== ReadyState.OPEN}
 						>
 							Join !
 						</Button>

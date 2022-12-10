@@ -14,7 +14,7 @@ type RoomUsecase struct {
 }
 
 type IRoomUsecase interface {
-	NewRoom(id string, name string, max_member int, member_count int) (*entity.Room, error)
+	NewRoom(id string, name string, max_count int) (*entity.Room, error)
 	GetRoomOfID(id string) (*entity.Room, error)
 	DeleteAllRoom() error
 	DeleteRoomOfID(id string) error
@@ -26,29 +26,26 @@ func NewRoomUsecase(repo repository.IRoomRepository) IRoomUsecase {
 	}
 }
 
-func (uc *RoomUsecase) NewRoom(id string, name string, max_member int, member_count int) (*entity.Room, error) {
-	if name == "" {
+func (uc *RoomUsecase) NewRoom(room_id string, room_name string, max_count int) (*entity.Room, error) {
+	if room_name == "" {
 		return nil, usecase_error.NameEmptyError
 	}
-	if max_member == 0 {
-		return nil, usecase_error.MaxMemberError
-	}
-	if member_count == 0 {
-		return nil, usecase_error.MemberCountError
+	if max_count == 0 {
+		return nil, usecase_error.MaxCountError
 	}
 
-	id = utils.GetHashId()
-	room, err := uc.repo.GetRoomOfID(id)
+	room_id = utils.GetHashId()
+	room, err := uc.repo.GetRoomOfID(room_id)
 
 	if err != nil {
 		return nil, err
 	}
 
-	if room.Name != "" {
+	if room.RoomName != "" {
 		return nil, usecase_error.RoomdIdUsedError
 	}
 
-	room, err = uc.repo.NewRoom(id, name, max_member, member_count)
+	room, err = uc.repo.NewRoom(room_id, room_name, max_count)
 	return room, err
 }
 
