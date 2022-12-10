@@ -16,13 +16,14 @@ const initResult : Result = {
 interface ResultStore {
     result: Result
     setResult : (info : Result) => void
+    init : () => void
 }
 
 export const useResultStore = create<ResultStore>()(
     persist(   
         (set) => ({ 
             result : initResult,
-            setResult : (state : Result) => 
-                set({result: state})
+            setResult : (state : Result) => set({result: state}),
+            init : () => set ({result: initResult})
         })
     ))

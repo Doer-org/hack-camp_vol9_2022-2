@@ -21,7 +21,7 @@ export type KeyLog = {
 }
      
 export type GameState = {
-    key : string
+    lastKeyInput : string
     questions : Question[]
     record : KeyLog[][]
     Q_n : number
