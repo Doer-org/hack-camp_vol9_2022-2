@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Home } from '@/pages/home'
 import PracticeOneLinear from '@/pages/game/practice/OneLinear'
-import { ModeSelect } from '@/pages/game/ModeSelect'
+import { ModeSelect } from '@/pages/game/practice/ModeSelect'
 import CreateRoomPage from '@/pages/game/multiplayer/CreateRoomPage'
 import Prepare from '@/pages/game/multiplayer/Prepare'
 import MultiplayerOneLinear from '@/pages/game/multiplayer/MultiplayerOneLinear'

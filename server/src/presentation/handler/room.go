@@ -29,7 +29,7 @@ func (rh *RoomHandler) NewRoom(ctx *gin.Context) {
 	}
 
 	room := json.RoomJsonToEntity(&roomjson)
-	room, err := rh.uc.NewRoom(room.Id, room.Name, room.MaxMember, room.MemberCount)
+	room, err := rh.uc.NewRoom(room.RoomId, room.RoomName, room.MaxCount)
 	if err != nil {
 		ctx.JSON(
 			http.StatusBadRequest,

@@ -27,7 +27,7 @@ export const postAddNewMember = (input: IPostAddNewMemberInput) : TE.TaskEither<
         async () => { 
             const { data } =  
                 await AxiosClient()
-                    .post(`/member/new?room_id=${input.room_id}`, input)
+                    .post(`/member/new`, input)
             return data.data
         },
         (reason) => new Error(String(reason)),

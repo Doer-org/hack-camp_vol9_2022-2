@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { ModeSelect } from "../game/ModeSelect";
+import { ModeSelect } from "../game/practice/ModeSelect";
  
   
 export const Home = () => {
