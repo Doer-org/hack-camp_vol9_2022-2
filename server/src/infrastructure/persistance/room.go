@@ -21,8 +21,8 @@ func NewRoomRepository(db *sql.DB) *RoomRepository {
 	}
 }
 
-func (repo *RoomRepository) NewRoom(id string, name string, max_member int, member_count int) (*entity.Room, error) {
-	statement := "INSERT INTO rooms VALUES(?,?,?,?)"
+func (repo *RoomRepository) NewRoom(room_id string, room_name string, max_count int) (*entity.Room, error) {
+	statement := "INSERT INTO rooms VALUES(?,?,?)"
 
 	stmt, err := repo.db.Prepare(statement)
 	if err != nil {
@@ -32,12 +32,11 @@ func (repo *RoomRepository) NewRoom(id string, name string, max_member int, memb
 	defer stmt.Close()
 
 	room := &entity.Room{}
-	_, err = stmt.Exec(id, name, max_member, member_count)
+	_, err = stmt.Exec(room_id, room_name, max_count)
 
-	room.Id = id
-	room.MaxMember = max_member
-	room.MemberCount = member_count
-	room.Name = name
+	room.RoomId = room_id
+	room.MaxCount = max_count
+	room.RoomName = room_name
 
 	if err != nil {
 		log.Println(err)
@@ -46,8 +45,8 @@ func (repo *RoomRepository) NewRoom(id string, name string, max_member int, memb
 
 	return room, nil
 }
-func (repo *RoomRepository) GetRoomOfID(id string) (*entity.Room, error) {
-	statement := "SELECT * FROM rooms WHERE id = ?"
+func (repo *RoomRepository) GetRoomOfID(room_id string) (*entity.Room, error) {
+	statement := "SELECT * FROM rooms WHERE room_id = ?"
 
 	stmt, err := repo.db.Prepare(statement)
 	if err != nil {
@@ -57,7 +56,7 @@ func (repo *RoomRepository) GetRoomOfID(id string) (*entity.Room, error) {
 	defer stmt.Close()
 
 	room := &entity.Room{}
-	err = stmt.QueryRow(id).Scan(&room.Id, &room.Name, &room.MaxMember, &room.MemberCount)
+	err = stmt.QueryRow(room_id).Scan(&room.RoomId, &room.RoomName, &room.MaxCount)
 
 	if err != nil && err != sql.ErrNoRows {
 		log.Println(err)
@@ -87,8 +86,8 @@ func (repo *RoomRepository) DeleteAllRoom() error {
 	return nil
 }
 
-func (repo *RoomRepository) DeleteRoomOfID(id string) error {
-	statement := "DELETE FROM rooms WHERE id = ?"
+func (repo *RoomRepository) DeleteRoomOfID(room_id string) error {
+	statement := "DELETE FROM rooms WHERE room_id = ?"
 
 	stmt, err := repo.db.Prepare(statement)
 	if err != nil {
@@ -97,7 +96,7 @@ func (repo *RoomRepository) DeleteRoomOfID(id string) error {
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(id)
+	_, err = stmt.Exec(room_id)
 
 	if err != nil {
 		log.Println(err)

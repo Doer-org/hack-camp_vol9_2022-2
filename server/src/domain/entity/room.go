@@ -1,8 +1,7 @@
 package entity
 
 type Room struct {
-	Id          string
-	Name        string
-	MaxMember   int
-	MemberCount int
+	RoomId          string
+	RoomName        string
+	MaxCount  int
 }

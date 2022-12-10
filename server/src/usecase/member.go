@@ -4,6 +4,7 @@ import (
 	"github.com/Doer-org/hack-camp_vol9_2022-2/domain/entity"
 	"github.com/Doer-org/hack-camp_vol9_2022-2/domain/repository"
 	usecase_error "github.com/Doer-org/hack-camp_vol9_2022-2/error/usecase"
+	"github.com/Doer-org/hack-camp_vol9_2022-2/utils"
 )
 
 var _ IMemberUsecase = &MemberUsecase{}
@@ -13,7 +14,7 @@ type MemberUsecase struct {
 }
 
 type IMemberUsecase interface {
-	CreateMember(name string, roomId string) (*entity.Member, error)
+	CreateMember(userId string, userName string, roomId string) (*entity.Member, error)
 	GetAllMembersOfRoomID(roomId string) (entity.Members, error)
 	DeleteAllMembersOfRoomID(roomId string) error
 }
@@ -24,15 +25,15 @@ func NewMemberUsecase(repo repository.IMemberRepository) IMemberUsecase {
 	}
 }
 
-func (uc *MemberUsecase) CreateMember(name string, roomId string) (*entity.Member, error) {
-	if name == "" {
+func (uc *MemberUsecase) CreateMember(userId string, userName string, roomId string) (*entity.Member, error) {
+	if userName == "" {
 		return nil, usecase_error.NameEmptyError
 	}
 	if roomId == "" {
 		return nil, usecase_error.RoomdIdEmptyError
 	}
-
-	member, err := uc.repo.CreateMember(name, roomId)
+	userId = utils.GetHashId()
+	member, err := uc.repo.CreateMember(userId, userName, roomId)
 	return member, err
 }
 

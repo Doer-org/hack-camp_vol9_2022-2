@@ -2,6 +2,7 @@ package persistance
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	"github.com/Doer-org/hack-camp_vol9_2022-2/domain/entity"
@@ -21,20 +22,20 @@ func NewMemberRepository(db *sql.DB) *MemberRepository {
 	}
 }
 
-func (repo *MemberRepository) CreateMember(name string, roomId string) (*entity.Member, error) {
-	statement := "INSERT INTO members (name, room_id) VALUES(?,?)"
+func (repo *MemberRepository) CreateMember(userId string, userName string, roomId string) (*entity.Member, error) {
+	statement := "INSERT INTO members (user_id, user_name, room_id) VALUES(?,?,?)"
 
 	stmt, err := repo.db.Prepare(statement)
 	if err != nil {
 		log.Println(err)
-		return nil, db_error.StatementError
+		return nil, fmt.Errorf("%v : %v", db_error.StatementError, err)
 	}
 	defer stmt.Close()
 
 	member := &entity.Member{}
-	_, err = stmt.Exec(name, roomId)
-
-	member.Name = name
+	_, err = stmt.Exec(userId, userName, roomId)
+	member.UserId = userId
+	member.UserName = userName
 	member.RoomId = roomId
 
 	if err != nil {
@@ -58,7 +59,7 @@ func (repo *MemberRepository) GetAllMembersOfRoomID(roomId string) (entity.Membe
 
 	for rows.Next() {
 		m := &entity.Member{}
-		err := rows.Scan(&m.Id, &m.Name, &m.RoomId);
+		err := rows.Scan(&m.UserId, &m.UserName, &m.RoomId)
 		if err != nil {
 			log.Println(err)
 			return nil, db_error.RowsScanError

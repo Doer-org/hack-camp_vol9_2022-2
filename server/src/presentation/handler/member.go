@@ -29,7 +29,7 @@ func (rh *MemberHandler) CreateMember(ctx *gin.Context) {
 	}
 
 	member := json.MemberJsonToEntity(&memberjson)
-	member, err := rh.uc.CreateMember(member.Name, member.RoomId)
+	member, err := rh.uc.CreateMember(member.UserId, member.UserName, member.RoomId)
 	if err != nil {
 		ctx.JSON(
 			http.StatusBadRequest,
