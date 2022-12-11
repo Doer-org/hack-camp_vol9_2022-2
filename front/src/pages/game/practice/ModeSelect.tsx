@@ -6,8 +6,8 @@ export const ModeSelect = () => {
       <div className="text-center">
         <h1 className="text-white text-5xl">ModeSelect</h1>
         <div className="mt-10">
-          <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 w-48 hover:border-blue-500 rounded">
-            <Link className="text-white" to="/game/practice/one-linear">
+          <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold border-b-4 border-blue-700 w-48 hover:border-blue-500 rounded">
+            <Link className="text-white inline-block w-full py-2 px-4" to="/game/practice/one-linear">
               Practice
             </Link>
           </button>

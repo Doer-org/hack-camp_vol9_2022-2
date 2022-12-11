@@ -6,6 +6,7 @@ import { useEventListener } from "usehooks-ts";
 // import {KeyLog , GameState} from '@/types/Game'
 import useMultiplayerOneLinear from "@/hooks/useMultiPlayerMode";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 
 interface Props {}
 
@@ -26,9 +27,10 @@ const PracticeOneLinear: React.FC<Props> = () => {
   } = useMultiplayerOneLinear();
   useEventListener("keydown", keyPress(handleKey));
   console.log(state);
+
   return (
     <div className="flex justify-center items-center h-full">
-      <div className="border p-10 border-violet-400 border-4 border-dashed">
+      <div className="border p-10 border-violet-400 border-4 border-dashed w-2/3">
         {
           /* {state.questions.map((q, i) => <h1 key={i}>{q.codes[0]}</h1>)} */
           state.Q_n === state.questions.length - 1 &&
