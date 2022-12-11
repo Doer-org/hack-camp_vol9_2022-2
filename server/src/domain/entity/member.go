@@ -1,6 +1,9 @@
 package entity
 
 type Member struct {
-	Id        string
-    Name      string
+	UserId     string
+	UserName   string
+	RoomId string
 }
+
+type Members []*Member

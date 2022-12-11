@@ -3,31 +3,33 @@ package handler
 import (
 	"net/http"
 
-	"github.com/jphacks/F_2205/server/src/domain/service"
-	"github.com/jphacks/F_2205/server/src/usecase"
-	"github.com/jphacks/F_2205/server/src/utils/json"
-
+	"github.com/Doer-org/hack-camp_vol9_2022-2/presentation/json"
+	"github.com/Doer-org/hack-camp_vol9_2022-2/usecase"
 	"github.com/gin-gonic/gin"
 )
 
-// TODO handlerがHubsに依存しているのが気になる。
 type RoomHandler struct {
 	uc usecase.IRoomUsecase
 }
 
-// NewRoomHandlerはRoomHandler構造体のポインタを返す
 func NewRoomHandler(uc usecase.IRoomUsecase) *RoomHandler {
 	return &RoomHandler{
 		uc: uc,
 	}
 }
 
-// GetRoomOfRoomIdは指定したRoomIdにRoomを取得するAPI
-func (h *RoomHandler) GetRoomOfRoomId(ctx *gin.Context) {
-	roomIdString := ctx.Param("room_id")
-	roomId := service.StringToRoomId(roomIdString)
+func (rh *RoomHandler) NewRoom(ctx *gin.Context) {
+	var roomjson json.RoomJson
+	if err := ctx.BindJSON(&roomjson); err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{"error": err.Error()},
+		)
+		return
+	}
 
-	room, err := h.uc.GetRoomOfRoomId(roomId)
+	room := json.RoomJsonToEntity(&roomjson)
+	room, err := rh.uc.NewRoom(room.Id, room.Name, room.MaxMember, room.MemberCount)
 	if err != nil {
 		ctx.JSON(
 			http.StatusBadRequest,
@@ -35,6 +37,27 @@ func (h *RoomHandler) GetRoomOfRoomId(ctx *gin.Context) {
 		)
 		return
 	}
+
+	roomJson := json.RoomEntityToJson(room)
+	ctx.JSON(
+		http.StatusOK,
+		gin.H{"data": roomJson},
+	)
+
+}
+
+func (rh *RoomHandler) GetRoomOfID(ctx *gin.Context) {
+	id := ctx.Param("id")
+	room, err := rh.uc.GetRoomOfID(id)
+
+	if err != nil {
+		ctx.JSON(
+			http.StatusBadRequest,
+			gin.H{"error": err.Error()},
+		)
+		return
+	}
+
 	roomJson := json.RoomEntityToJson(room)
 	ctx.JSON(
 		http.StatusOK,
@@ -42,9 +65,10 @@ func (h *RoomHandler) GetRoomOfRoomId(ctx *gin.Context) {
 	)
 }
 
-// CreateRoomは新しいRoomを作成するハンドラー
-func (h *RoomHandler) CreateRoom(ctx *gin.Context) {
-	roomInfo, err := h.uc.CreateRoomNumber()
+func (rh *RoomHandler) DeleteRoomOfID(ctx *gin.Context) {
+	id := ctx.Param("id")
+	err := rh.uc.DeleteRoomOfID(id)
+
 	if err != nil {
 		ctx.JSON(
 			http.StatusBadRequest,
@@ -52,36 +76,9 @@ func (h *RoomHandler) CreateRoom(ctx *gin.Context) {
 		)
 		return
 	}
-	h.uc.CheckExistsRoomAndInit(roomInfo.Id)
-	roomInfoJson := json.RoomInfoEntityToJson(roomInfo)
-	ctx.JSON(
-		http.StatusOK,
-		gin.H{"data": roomInfoJson},
-	)
-}
-
-// DeleteRoomOfRoomIdは受け取ったroom_idのRoomを削除するハンドラー
-func (h *RoomHandler) DeleteRoomOfRoomId(ctx *gin.Context) {
-	roomIdString := ctx.Param("room_id")
-	roomId := service.StringToRoomId(roomIdString)
-
-	// Roomの削除
-	// TODO 見つからなかった時にエラーを返す処理にしたい
-	h.uc.DeleteRoomOfRoomId(roomId)
 
 	ctx.JSON(
 		http.StatusOK,
-		gin.H{"ok": "delete room of roomId successful"},
-	)
-}
-
-// GetSumOfRoomは存在する部屋の数を返すハンドラー
-func (h *RoomHandler) GetCountSumOfRoom(ctx *gin.Context) {
-	cnt := h.uc.GetSumOfRoom()
-	cntRoomJson := json.CreateCountRoomJson(cnt)
-
-	ctx.JSON(
-		http.StatusOK,
-		gin.H{"data": cntRoomJson},
+		gin.H{"data": "success"},
 	)
 }

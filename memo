@@ -1,0 +1,122 @@
+package main
+
+import (
+    "fmt"
+	"os"
+	"io"
+	"time"
+	"database/sql"
+	"godotenv"
+    "github.com/labstack/echo"
+    "github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+)
+
+
+
+//task
+//問題を管理するデータベースを作る
+//追加・更新・取得APIを作る
+//Code Tips Language
+//ワンライナー　DBに入れてデータを取得
+//DBで登録しているものを渡す・問題の受け渡し
+
+
+
+type Question struct {
+    gorm.Model
+	 Id        string
+     Code      string
+	 Tips      string
+	 Language  string
+}
+
+
+func (u Question) String() string {
+    return fmt.Sprintf("Id:%s \n Code:%s \n Tips:%d \n Language:%d \n",
+	    u.Id,
+	    u.Code,
+        u.Tips,
+		u.Language,
+    )
+}
+
+// ユーザーを登録
+func BaseAPI_user() echo.HandlerFunc {
+    return func(c echo.Context) error {
+        db := databases.Connect()
+        defer db.Close()
+
+        //リクエストボディ
+        user := new(Question)
+
+        user1 := Question{
+			Id:        user.Id,
+            Code:      user.Code,
+            Tips:      user.Tips,
+			Language:  user.Language,
+		}
+
+        //追加
+        insertUsers := []Question{user1}
+        insert(insertUsers, db)
+
+        //更新
+        update(user1, db)
+
+		//取得
+		
+
+        return c.JSON()
+    }
+}
+
+func insert(users []Question, db *gorm.DB) {
+    for _, user := range users {
+        db.NewRecord(user)
+        db.Create(&user)
+    }
+}
+
+func update(users Question, db *gorm.DB) {
+    var user Question
+    db.Model(&user).Where("id = ?", 1).Update(map[string]interface{}{"Id": users.Id, "Code": users.Code, "Tips": users.Tips, "Language": users.Language})
+}
+
+
+
+func search(age int, db *gorm.DB) ([]Question) {
+    var user []Question
+    db.Raw("SELECT * FROM users WHERE code = ? ", age).Scan(&user)
+
+    return user
+}
+
+
+// SQLConnect DB接続
+
+func GormConnect() (database *gorm.DB) {
+    // パスワード等を.envファイルから読み取る
+    // program > go > .env
+    err := godotenv.Load(fmt.Sprintf("../%s.env", os.Getenv("GO_ENV")))
+    if err != nil {
+        panic(err.Error())
+    } else {
+        fmt.Println("ok")
+    }
+
+    DBMS := "mysql"                    // MySQL
+    PROTOCOL := "tcp(localhost:3306)"  // db:3306
+    DBNAME := ""                       // テーブル名
+    USER := ""                         // MySQLユーザー名
+    PASS := ""                         // パスワード
+
+    CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
+    db, err := gorm.Open(DBMS, CONNECT)
+    if err != nil {
+        panic(err.Error())
+    } else {
+        fmt.Println("DB接続成功")
+    }
+    return db
+}
