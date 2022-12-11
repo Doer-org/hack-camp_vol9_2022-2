@@ -10,7 +10,7 @@ import (
 type Client struct {
 	Hub          *Hub
 	Conn         *websocket.Conn
-	SendGameInfo chan *json.GameJson
+	SendRoomInfo chan *json.GameJson
 	RoomId       json.RoomIdJson
 }
 
