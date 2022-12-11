@@ -46,10 +46,77 @@ const nextRecord = (state :GameState , inputKey: string) => {
   }
 }
 const initQuestions = [
-  { codes: "a", tips: "Hello Worldを出力する", language: "F#" },
-  // { codes: "printfn \"Hello World\"", tips: "Hello Worldを出力する", language: "F#" },
-  // { codes: "[1..10] |> List.map(fun x -> 2 * x)", tips: "1から10の整数のリストの要素を2倍する．", language: "F#" },
-]
+    {
+      codes: "printfn \"Hello World\"",
+      tips: "Hello Worldを出力する", language: "F#"
+    },
+    {
+      codes: "[1..10] |> List.map(fun x -> 2 * x)",
+      tips: "1から10の整数のリストの要素を2倍する．",
+      language: "F#"
+    },
+    {
+      codes: "let isEven n = n % 2 = 0",
+      tips: "偶奇を調べる",
+      language: "F#"
+    },
+  
+    {
+      codes: "let alphabet = 'a' :: ['b'..'z']",
+      tips: "先頭に要素を追加して，a, b, c, ..., zのリストをつくる．",
+      language: "F#"
+    },
+    {
+      codes: "[1..10] |> List.map(fun x -> x * 2)",
+      tips: "1から10の整数のリストの要素を2倍する．",
+      language: "F#"
+    },
+    {
+      codes: "let ALPHABET = ['A'; 'B'; 'C'] @ ['D'..'Z']",
+      tips: "リストを結合して，A, B, C, ..., Zのリストをつくる．",
+      language: "F#"
+    },
+    {
+      codes: "let alphabet = 'a' :: ['b'..'z']",
+      tips: "先頭に要素を追加して，a, b, c, ..., zのリストをつくる．",
+      language: "F#"
+    },
+    {
+      codes: "[1..10] |> List.filter(fun x -> x % 2 = 0) |> List.map(fun x -> pown x 2)",
+      tips: "整数のリストから偶数を抽出して，2乗する．",
+      language: "F#"
+    },
+    {
+      codes: "let rec fact n = match n with | 0 -> 1 | _ -> n * fact (n-1)",
+      tips: "階乗関数を再帰的に定義",
+      language: "F#"
+    },
+    {
+      codes: "let rec factCps n cont = match n with | 0 -> cont 1 | _ -> factCps (n-1) (fun m -> n * m |> cont )",
+      tips: "継続渡しスタイル(Continuation Passing Style)の階乗関数 8! = factCps 8 id",
+      language: "F#"
+    },
+    {
+      codes: "[\"Hello\"; \"F#\"; \"World\"] |> List.reduce(fun a b -> a + \" \" + b)",
+      tips: "リスト中の文字列を結合する（\"Hello F# World\"）",
+      language: "F#"
+    },
+    {
+      codes: "[for i in 1..5 -> pown i i]",
+      tips: "1^1, 2^2, ..., 5^5 のリストを内包表記で作る",
+      language: "F#"
+    },
+    {
+      codes: "Set.intersect (set [1; 2; 3]) (set [2; 3; 4])",
+      tips: "積集合を求める（set [2; 3]）",
+      language: "F#"
+    },
+    {
+      codes: "[for i in 1..9 -> [for j in 1..9 -> i * j]]",
+      tips: "九九表を作る",
+      language: "F#"
+    },
+  ]
 
 // ？？？？？？？？？？？？？？？？
 const initState = ()  : GameState =>  {
