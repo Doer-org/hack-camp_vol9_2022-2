@@ -2,6 +2,7 @@ import { useResultStore } from "@/store/ResultStore";
 import { GameState, Question } from "@/types/Game";
 import React, { useState, useEffect } from "react";
 import * as A from "fp-ts/Array";
+import * as R from 'fp-ts/Random'
 import { pipe } from "fp-ts/lib/function";
 import { string } from "prop-types";
 
@@ -72,22 +73,12 @@ const initQuestions = [
     codes: "let alphabet = 'a' :: ['b'..'z']",
     tips: "先頭に要素を追加して，a, b, c, ..., zのリストをつくる．",
     language: "F#",
-  },
-  {
-    codes: "[1..10] |> List.map(fun x -> x * 2)",
-    tips: "1から10の整数のリストの要素を2倍する．",
-    language: "F#",
-  },
+  }, 
   {
     codes: "let ALPHABET = ['A'; 'B'; 'C'] @ ['D'..'Z']",
     tips: "リストを結合して，A, B, C, ..., Zのリストをつくる．",
     language: "F#",
-  },
-  {
-    codes: "let alphabet = 'a' :: ['b'..'z']",
-    tips: "先頭に要素を追加して，a, b, c, ..., zのリストをつくる．",
-    language: "F#",
-  },
+  }, 
   {
     codes:
       "[1..10] |> List.filter(fun x -> x % 2 = 0) |> List.map(fun x -> pown x 2)",
@@ -130,11 +121,23 @@ const initQuestions = [
 
 // ？？？？？？？？？？？？？？？？
 const initState = (): GameState => {
+  
+  const qs = [...Array(initQuestions.length)].map((_:undefined, idx:number) => idx) // A.copy(initQuestions)
+  const selectN = 5
+  for (let i = 0; i < selectN; i++ ){
+    const r = R.randomInt(i+1, initQuestions.length-1)()
+    const tmp = qs[r]
+    qs[r] = qs[i]
+    qs[i] = tmp 
+  }
+  console.log(qs)
+  const selectedQuestions = 
+    qs.slice(0, selectN).map((i,_) => initQuestions[i]) 
   return {
     lastKeyInput: "",
-    questions: initQuestions,
+    questions: selectedQuestions,
     record: pipe(
-      initQuestions,
+      selectedQuestions,
       A.map((question) =>
         question.codes.split("").map((v, i) => {
           return { status: "waiting", key: v };
