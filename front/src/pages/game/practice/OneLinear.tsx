@@ -43,14 +43,11 @@ const PracticeOneLinear: React.FC<Props> = () => {
               <p className="text-center text-white mb-5 text-xl">
                 {state.Q_n + 1} / {state.questions.length}{" "}
               </p>
-              <h1 className="text-6xl">
+              <h1 className="text-6xl text-center">
                 {state.record[state.Q_n].map((v, i) => {
                   if (v.status === "waiting") {
                     return (
-                      <span
-                        style={{ color: "gray", backgroundColor: "green" }}
-                        key={i}
-                      >
+                      <span style={{ color: "gray" }} key={i}>
                         {v.key}
                       </span>
                     );
@@ -69,7 +66,7 @@ const PracticeOneLinear: React.FC<Props> = () => {
                   } else {
                     return (
                       <span
-                        style={{ color: "darkred", backgroundColor: "green" }}
+                        style={{ color: "darkred", backgroundColor: "red" }}
                         key={i}
                       >
                         {v.key}
@@ -78,25 +75,26 @@ const PracticeOneLinear: React.FC<Props> = () => {
                   }
                 })}
               </h1>
-
-              <div className="mt-10">
-                <p className="text-white">
-                  Language: {state.questions[state.Q_n].language},{" "}
-                </p>
-                <p className="text-white">
-                  Tips: {state.questions[state.Q_n].tips}
-                </p>
-                <p className="text-white">
-                  last input : '{state.lastKeyInput}'
-                </p>
-                {state.finished ? (
-                  <button
-                    className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 w-48 hover:border-blue-500 rounded mt-5"
-                    onClick={() => navigate("/game/multiplayer/room/result")}
-                  >
-                    結果を見る
-                  </button>
-                ) : null}
+              <div className="flex justify-center">
+                <div className="mt-10 inline-block mx-auto bg-black px-4 py-5">
+                  <p className="text-emerald-400 text-lg">
+                    Language: {state.questions[state.Q_n].language},{" "}
+                  </p>
+                  <p className="text-emerald-400 text-lg">
+                    Tips: {state.questions[state.Q_n].tips}
+                  </p>
+                  <p className="text-emerald-400 text-lg">
+                    last input : '{state.lastKeyInput}'
+                  </p>
+                  {state.finished ? (
+                    <button
+                      className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 w-full hover:border-blue-500 rounded mt-5"
+                      onClick={() => navigate("/game/multiplayer/room/result")}
+                    >
+                      結果を見る
+                    </button>
+                  ) : null}
+                </div>
               </div>
             </>
           )
