@@ -6,7 +6,7 @@ import { Routing } from './Routing'
 
 function App() {  
   return (
-    <div className="App" >    
+    <div className="App bg-slate-800 h-full" >    
         <Routing /> 
     </div>
   )
